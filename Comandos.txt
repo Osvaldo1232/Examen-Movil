@@ -1,0 +1,19 @@
+correr fluter desde navegador/visual 
+flutter run
+
+
+
+
+se programa dentro de la carpeta 
+
+lib
+ archivo main.dart
+
+
+para que tome los cambios desde consola donde tienes el comando flutter run preciona R para que recargue, primero debes de guardar tus cambios en visual.
+ 
+
+para andorid studio no intente 
+
+
+
