@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Productos igual o mayor 180€</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>Fabricantes y Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
 
-   <ion-grid>
+    <ion-grid>
   <ion-row>
     <ion-col size="6">
       <ion-button expand="block" color="primary" (click)="opcion1()">
@@ -36,13 +36,31 @@
 
 
   <hr />
-  <ion-list>
-    <ion-item *ngFor="let p of productos">
-      <ion-label>
-        <h2>{{ p.producto }}</h2>
-        <p>Fabricante: {{ p.fabricante }}</p>
-      </ion-label>
-      <ion-badge slot="end">{{ p.precio }}€</ion-badge>
-    </ion-item>
-  </ion-list>
+
+
+  <ion-accordion-group>
+    <ion-accordion *ngFor="let fab of fabricantes">
+
+      <ion-item slot="header">
+        <ion-label>{{ fab.fabricante }}</ion-label>
+      </ion-item>
+
+      <div slot="content">
+
+        <ion-list *ngIf="fab.productos.length > 0; else sinProductos">
+          <ion-item *ngFor="let prod of fab.productos">
+            <ion-label>{{ prod }}</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ng-template #sinProductos>
+          <ion-item>
+            <ion-label color="medium">Sin productos</ion-label>
+          </ion-item>
+        </ng-template>
+
+      </div>
+
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>

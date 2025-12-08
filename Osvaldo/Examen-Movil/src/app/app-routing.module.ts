@@ -23,6 +23,18 @@ const routes: Routes = [
     path: 'modal',
     loadChildren: () => import('./components/modal/modal.module').then( m => m.ModalPageModule)
   },
+  {
+    path: 'fabricantes',
+    loadChildren: () => import('./fabricantes/fabricantes.module').then( m => m.FabricantesPageModule)
+  },
+  {
+    path: 'productos-full',
+    loadChildren: () => import('./productos-full/productos-full.module').then( m => m.ProductosFullPageModule)
+  },
+  {
+    path: 'precio-asus',
+    loadChildren: () => import('./precio-asus/precio-asus.module').then( m => m.PrecioAsusPageModule)
+  },
 ];
 
 @NgModule({

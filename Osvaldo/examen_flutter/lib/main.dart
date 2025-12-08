@@ -1,5 +1,5 @@
-import 'package:examen_flutter/paginanueva.dart';
 import 'package:flutter/material.dart';
+import 'paginanueva.dart';
 
 void main() {
   runApp(const MyApp());
@@ -120,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
             const SizedBox(height: 40),
 
-            // 👉 BOTÓN NUEVO PARA IR A OTRA PANTALLA
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -128,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const PaginaNueva()),
                 );
               },
-              child: const Text("Ir a otra pantalla"),
+              child: const Text("Ir al Seguro de Auto"),
             ),
           ],
         ),

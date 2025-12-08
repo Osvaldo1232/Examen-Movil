@@ -1,4 +1,3 @@
-import 'package:examen_flutter/PaginaDos.dart';
 import 'package:flutter/material.dart';
 
 class PaginaNueva extends StatefulWidget {
@@ -9,91 +8,137 @@ class PaginaNueva extends StatefulWidget {
 }
 
 class _PaginaNuevaState extends State<PaginaNueva> {
-  final TextEditingController horasCtrl = TextEditingController();
-  final TextEditingController precioCtrl = TextEditingController();
+  String tipoPoliza = "A";
+  bool bebeAlcohol = false;
+  bool usaLentes = false;
+  bool tieneEnfermedad = false;
+
+  final TextEditingController edadCtrl = TextEditingController();
 
   double? total;
 
   void calcular() {
-    final horas = double.tryParse(horasCtrl.text);
-    final precio = double.tryParse(precioCtrl.text);
+    double base = (tipoPoliza == "A") ? 1200 : 950;
 
-    if (horas == null || precio == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Ingresa valores válidos")));
-      return;
+    double incremento = 0;
+
+    if (bebeAlcohol) incremento += base * 0.10;
+    if (usaLentes) incremento += base * 0.05;
+    if (tieneEnfermedad) incremento += base * 0.05;
+
+    final edad = int.tryParse(edadCtrl.text) ?? 0;
+
+    if (edad > 40) {
+      incremento += base * 0.20;
+    } else {
+      incremento += base * 0.10;
     }
 
     setState(() {
-      total = horas * precio;
+      total = base + incremento;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Nueva Pantalla")),
+      appBar: AppBar(title: const Text("Seguro de Auto"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const Text(
-              "Cálculo de pago",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-
-            /// Campo horas trabajadas
-            TextField(
-              controller: horasCtrl,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Horas trabajadas",
-                border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Tipo de póliza:",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            /// Campo precio por hora
-            TextField(
-              controller: precioCtrl,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Precio por hora",
-                border: OutlineInputBorder(),
+              Row(
+                children: [
+                  Radio(
+                    value: "A",
+                    groupValue: tipoPoliza,
+                    onChanged: (value) {
+                      setState(() {
+                        tipoPoliza = value.toString();
+                      });
+                    },
+                  ),
+                  const Text("Cobertura amplia (A)"),
+                ],
               ),
-            ),
+              Row(
+                children: [
+                  Radio(
+                    value: "B",
+                    groupValue: tipoPoliza,
+                    onChanged: (value) {
+                      setState(() {
+                        tipoPoliza = value.toString();
+                      });
+                    },
+                  ),
+                  const Text("Daños a terceros (B)"),
+                ],
+              ),
 
-            const SizedBox(height: 20),
+              CheckboxListTile(
+                title: const Text("¿Bebe alcohol?"),
+                value: bebeAlcohol,
+                onChanged: (value) {
+                  setState(() {
+                    bebeAlcohol = value!;
+                  });
+                },
+              ),
+              CheckboxListTile(
+                title: const Text("¿Usa lentes?"),
+                value: usaLentes,
+                onChanged: (value) {
+                  setState(() {
+                    usaLentes = value!;
+                  });
+                },
+              ),
+              CheckboxListTile(
+                title: const Text("¿Tiene enfermedad?"),
+                value: tieneEnfermedad,
+                onChanged: (value) {
+                  setState(() {
+                    tieneEnfermedad = value!;
+                  });
+                },
+              ),
 
-            ElevatedButton(onPressed: calcular, child: const Text("Calcular")),
+              TextField(
+                controller: edadCtrl,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: "Edad"),
+              ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 25),
 
-            if (total != null)
-              Text(
-                "Total a pagar: \$${total!.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Center(
+                child: ElevatedButton(
+                  onPressed: calcular,
+                  child: const Text("Calcular costo"),
                 ),
               ),
-            const SizedBox(height: 40),
 
-            // 🔥 AQUI BOTÓN PARA IR A PAGINA DOS
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const PaginaDos()),
-                );
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: const Text("Ir a Página Dos"),
-            ),
-          ],
+              const SizedBox(height: 20),
+
+              if (total != null)
+                Center(
+                  child: Text(
+                    "Costo total: \$${total!.toStringAsFixed(2)}",
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

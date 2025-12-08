@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Precio Máximo ASUS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button expand="block" color="primary" (click)="opcion1()">
+       Productos igual o mayor 180€
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" color="secondary" (click)="opcion2()">
+       Fabricantes y Productos
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button expand="block" color="tertiary" (click)="opcion3()">
+     Listado Completo de Productos
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" color="success" (click)="opcion4()">
+       Precio Máximo ASUS
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+  <hr />
+
+  <ion-card *ngIf="productoMax">
+    <ion-card-header>
+      <ion-card-title style="text-align:center;">
+        Producto más caro de ASUS
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content style="text-align:center; font-size: 1.5rem;">
+      <p><strong>{{ productoMax.producto }}</strong></p>
+      <p style="font-size:2rem; color:#3880ff;">{{ productoMax.precio }} €</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item *ngIf="!productoMax">
+    <ion-label>No se encontró ningún producto ASUS.</ion-label>
+  </ion-item>
+
+</ion-content>

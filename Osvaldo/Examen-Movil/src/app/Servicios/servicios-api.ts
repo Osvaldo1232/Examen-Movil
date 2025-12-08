@@ -54,4 +54,23 @@ export class ServiciosApi {
     buscarPresion(user:any, fecha:any):Observable<any>{
     return this.http.get(`${this.baseUrl}/buscarpresiones.php?usuario=${user}&fecha=${fecha}`);
   }
+
+
+  // inician servicio snuevo
+
+   productos180():Observable<any>{
+    return this.http.get(`${this.baseUrl}/consulta1.php`);
+  }
+
+     fabricantes():Observable<any>{
+    return this.http.get(`${this.baseUrl}/consulta2.php`);
+  }
+
+     productos():Observable<any>{
+    return this.http.get(`${this.baseUrl}/consulta3.php`);
+  }
+
+    asus():Observable<any>{
+    return this.http.get(`${this.baseUrl}/consulta4.php`);
+  }
 }
